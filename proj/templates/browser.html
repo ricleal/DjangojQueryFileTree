@@ -3,21 +3,23 @@
 {% block content %}
 
 <div class="container">
-  <h1>Browser</h1>
-  <p>Pick a file...</p>
+  <h1>Server side file picking</h1>
+  <p>Pick a file:</p>
+  <p>Either by clicking on the button or on the input field...</p>
   <div class="row">
     <div class="col-sm-4">
       <div class="form-group">
-        <label for="usr">File path:</label>
-        <input type="text" class="form-control" id="file">
+        <label for="usr">File1 path:</label>
+        <input type="text" class="form-control" id="file1" data-toggle="modal" data-target="#file_modal">
       </div>
-      <button id="file_button" type="button" class="btn btn-primary">Pick a file</button>
+      <button id="file1_button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#file_modal">Pick a file</button>
     </div>
-    <div class="col-sm-4" id="col_browser">
-      <pre class="pre-scrollable">
-        <div class="browser">
-        </div>
-      </pre>
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label for="usr">File2 path:</label>
+        <input type="text" class="form-control" id="file2" data-toggle="modal" data-target="#file_modal">
+      </div>
+      <button id="file2_button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#file_modal">Pick a file</button>
     </div>
   </div>
   <div class="row">
@@ -31,28 +33,55 @@
   </div>
 </div>
 
+<!-- Modal -->
+<div id="file_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Pick a file</h4>
+      </div>
+      <div class="modal-body">
+        <pre class="pre-scrollable">
+          <div class="browser">
+          </div>
+        </pre>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 {% endblock %}
 
 {% block body_end %}
 <script type="text/javascript">
-  $(document).ready(function() {
-    $("#col_browser").hide();
-  });
-
-  function openBrowser() {
-    $('.browser').fileTree({
-      script: '/app1/browser/'
-    }, function(file) {
-      //alert(file);
-      $('#file').val(file);
-      $("#col_browser").hide(1000);
+// keeps the selector to assign the selected file
+var selector;
+$(document).ready( function() {
+        $('.browser').fileTree({
+          script: '/app1/browser/',
+          root : '/tmp',
+            expandSpeed: 100,
+            collapseSpeed: 100,
+            multiFolder: false
+        }, function(file) {
+            $(selector).val(file);
+            $('#file_modal').modal('hide');
+        }).on('filetreeclicked', function(e, data)    { console.log(data); });
     });
-  };
-  //$('#file_button').on('click', openBrowser());
-  $('#file_button').on('click', function(event) {
-    event.preventDefault(); // To prevent following the link (optional)
-    $("#col_browser").show();
-    openBrowser();
+
+  $('#file1_button, #file1').on('click', function(event) {
+    //event.preventDefault(); // To prevent following the link (optional)
+    selector = '#file1';
+  });
+  $('#file2_button, #file2').on('click', function(event) {
+    //event.preventDefault(); // To prevent following the link (optional)
+    selector = '#file2';
   });
 </script>
 {% endblock %}

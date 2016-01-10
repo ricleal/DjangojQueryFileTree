@@ -12,9 +12,9 @@ class IndexView(TemplateView):
 
 @csrf_exempt
 def dirlist(request):
-    print "POST:", request.POST
-    print "GET :", request.GET
-
+    '''
+    Never ever use @csrf_exempt in production!!
+    '''
     r = ['<ul class="jqueryFileTree" style="display: none;">']
     try:
         r = ['<ul class="jqueryFileTree" style="display: none;">']

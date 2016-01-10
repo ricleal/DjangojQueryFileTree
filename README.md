@@ -1,4 +1,6 @@
-# DjangojQueryFileTree
+# Server side file picking / browser
+
+## DjangojQueryFileTree
 
 Example using jQueryFileTree inside Django
 
