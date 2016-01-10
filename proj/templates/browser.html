@@ -1,0 +1,85 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>jQueryFileTree Demo</title>
+  <!-- FONT
+	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
+  <!-- CSS
+	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+  <link rel="stylesheet" href="{% static "jQueryFileTree.min.css" %}">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <!--link rel="stylesheet" href="css/jqft-test.css"-->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/atelier-cave.light.min.css">
+  <!-- Favicon
+	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png" />
+</head>
+<body>
+
+
+<div class="container">
+  <h1>Browser</h1>
+  <p>Pick a file...</p>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label for="usr">File path:</label>
+        <input type="text" class="form-control" id="file">
+      </div>
+      <button id="file_button" type="button" class="btn btn-primary">Pick a file</button>
+    </div>
+    <div class="col-sm-4" id="col_browser">
+      <pre class="pre-scrollable">
+        <div class="browser">
+        </div>
+      </pre>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-8">
+      <h2>Lorem ipsum </h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ac commodo dolor. Aliquam eleifend tincidunt elit, eget aliquet elit cursus ut. Mauris feugiat augue nulla, ut hendrerit neque hendrerit et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec efficitur condimentum leo. In elit lorem, lobortis nec dictum sed, feugiat eu eros. Sed imperdiet diam nec ornare pharetra. Nam feugiat metus dolor, et egestas nisl condimentum et. Donec facilisis sapien enim, vel aliquam ipsum bibendum ac. Integer venenatis malesuada augue, ultrices consequat leo suscipit eu. Curabitur lacinia leo viverra erat fermentum tristique. Suspendisse placerat nibh nec justo tempus eleifend. Nam nec dictum tellus. Aliquam a ipsum sit amet metus bibendum faucibus. Aenean laoreet porta feugiat.</p>
+    </div>
+  </div>
+</div>
+
+
+
+  <!-- JS
+	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <!--script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="{% static "jQueryFileTree.min.js" %}"></script>
+  <script type="text/javascript">
+  $(document).ready(function(){
+    $("#col_browser").hide();
+  });
+  function openBrowser() {
+        $('.browser').fileTree({ script : '/app1/browser/' }, function(file) {
+            //alert(file);
+            $('#file').val(file);
+            $("#col_browser").hide(1000);
+        });
+    };
+    //$('#file_button').on('click', openBrowser());
+    $('#file_button').on('click', function(event) {
+      event.preventDefault(); // To prevent following the link (optional)
+      $("#col_browser").show();
+      openBrowser();
+    });
+
+  </script>
+
+  <!-- End Document
+	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+
+</html>
