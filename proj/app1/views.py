@@ -10,10 +10,16 @@ import urllib
 class IndexView(TemplateView):
     template_name = "browser.html"
 
-@csrf_exempt
+#@csrf_exempt
 def dirlist(request):
     '''
     Never ever use @csrf_exempt in production!!
+    To avoid this use in the request html page:
+    <script>
+      $.ajaxSetup({data: {
+        csrfmiddlewaretoken: '{{ csrf_token }}'
+      }});
+    </script>
     '''
     r = ['<ul class="jqueryFileTree" style="display: none;">']
     try:

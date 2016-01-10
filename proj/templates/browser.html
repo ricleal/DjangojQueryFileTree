@@ -10,14 +10,14 @@
     <div class="col-sm-4">
       <div class="form-group">
         <label for="usr">File1 path:</label>
-        <input type="text" class="form-control" id="file1" data-toggle="modal" data-target="#file_modal">
+        <input type="text" class="form-control" id="file1_input" data-toggle="modal" data-target="#file_modal">
       </div>
       <button id="file1_button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#file_modal">Pick a file</button>
     </div>
     <div class="col-sm-4">
       <div class="form-group">
         <label for="usr">File2 path:</label>
-        <input type="text" class="form-control" id="file2" data-toggle="modal" data-target="#file_modal">
+        <input type="text" class="form-control" id="file2_input" data-toggle="modal" data-target="#file_modal">
       </div>
       <button id="file2_button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#file_modal">Pick a file</button>
     </div>
@@ -44,6 +44,7 @@
       </div>
       <div class="modal-body">
         <pre class="pre-scrollable">
+          <!-- Anchor for the fileTree -->
           <div class="browser">
           </div>
         </pre>
@@ -60,28 +61,37 @@
 
 {% block body_end %}
 <script type="text/javascript">
-// keeps the selector to assign the selected file
-var selector;
-$(document).ready( function() {
-        $('.browser').fileTree({
-          script: '/app1/browser/',
-          root : '/tmp',
-            expandSpeed: 100,
-            collapseSpeed: 100,
-            multiFolder: false
-        }, function(file) {
-            $(selector).val(file);
-            $('#file_modal').modal('hide');
-        }).on('filetreeclicked', function(e, data)    { console.log(data); });
-    });
+  // keeps the selector to assign the selected file
+  var selector;
 
-  $('#file1_button, #file1').on('click', function(event) {
-    //event.preventDefault(); // To prevent following the link (optional)
-    selector = '#file1';
+  // Setting up jQuery to pass csrf tokens to Django when using ajax.
+  $.ajaxSetup({data: {
+    csrfmiddlewaretoken: '{{ csrf_token }}'
+  }});
+
+  // Loads the file browser
+  $(document).ready(function() {
+    $('.browser').fileTree({
+      script: '/app1/browser/',
+      root: '/tmp',
+      expandSpeed: 100,
+      collapseSpeed: 100,
+      multiFolder: false
+    }, function(file) {
+      $(selector).val(file);
+      $('#file_modal').modal('hide');
+    }).on('filetreeclicked', function(e, data) {
+      console.log(data);
+    });
   });
-  $('#file2_button, #file2').on('click', function(event) {
+
+  $('#file1_button, #file1_input').on('click', function(event) {
     //event.preventDefault(); // To prevent following the link (optional)
-    selector = '#file2';
+    selector = '#file1_input';
+  });
+  $('#file2_button, #file2_input').on('click', function(event) {
+    //event.preventDefault(); // To prevent following the link (optional)
+    selector = '#file2_input';
   });
 </script>
 {% endblock %}
