@@ -9,4 +9,4 @@ Example using jQueryFileTree inside Django.
 
 See jQueryFileTree [here](http://jqueryfiletree.github.io/).
 
-![Screen Shot][https://github.com/ricleal/DjangojQueryFileTree/blob/master/file_picker.png]
+![Screen Shot](https://raw.githubusercontent.com/ricleal/DjangojQueryFileTree/master/file_picker.png)
